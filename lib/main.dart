@@ -1,8 +1,6 @@
-
 import 'package:flutter/material.dart';
+import 'package:mental_health_tracker/Main_page.dart';
 import 'package:mental_health_tracker/spalsh.dart';
-
-
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,8 +15,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-        debugShowCheckedModeBanner: false, home: firstPage());
+        debugShowCheckedModeBanner: false, home: MainPage());
   }
 }
-
-

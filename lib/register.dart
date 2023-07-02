@@ -56,119 +56,127 @@ class _registerPageState extends State<registerPage> {
   @override
   Widget build(BuildContext context) {
     Size mq = MediaQuery.of(context).size;
-    return Scaffold(
-      backgroundColor: const Color(0xff3C2177),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Image.asset('images/landscape.jpeg'),
-            SizedBox(height: mq.height * .08),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: Container(
-                decoration: BoxDecoration(
-                    color: Colors.grey.shade500,
-                    border: Border.all(color: Colors.grey),
-                    borderRadius: BorderRadius.circular(15)),
-                child: Padding(
-                  padding: EdgeInsets.only(left: 20.0),
-                  child: TextField(
-                    controller: _nameController,
-                    decoration: const InputDecoration(
-                        border: InputBorder.none,
-                        hintText: 'Name',
-                        hintStyle: TextStyle(color: Colors.black)),
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(height: mq.height * .04),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: Container(
-                decoration: BoxDecoration(
-                    color: Colors.grey.shade500,
-                    border: Border.all(color: Colors.grey),
-                    borderRadius: BorderRadius.circular(15)),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 20.0),
-                  child: TextField(
-                    controller: _emailController,
-                    decoration: const InputDecoration(
-                        border: InputBorder.none,
-                        hintText: 'Email-Id',
-                        hintStyle: TextStyle(color: Colors.black)),
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(height: mq.height * .04),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: Container(
-                decoration: BoxDecoration(
-                    color: Colors.grey.shade500,
-                    border: Border.all(color: Colors.grey),
-                    borderRadius: BorderRadius.circular(15)),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 20.0),
-                  child: TextFormField(
-                    controller: _passwordController,
-                    obscureText: true,
-                    decoration: const InputDecoration(
-                        border: InputBorder.none,
-                        hintText: 'Password',
-                        hintStyle: TextStyle(color: Colors.black)),
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(height: mq.height * .05),
-            ElevatedButton.icon(
-              onPressed: () {
-                registerUser();
-                clearText();
-              },
-              label: const Text(
-                'REGISTER',
-                style: TextStyle(fontSize: 18),
-              ),
-              style: ElevatedButton.styleFrom(
-                  shape: const StadiumBorder(),
-                  backgroundColor: const Color(0xff0E4393),
-                  minimumSize: Size(mq.width * .6, mq.height * .075)),
-              icon: const Icon(
-                Icons.login,
-                size: 25,
-              ),
-            ),
-            const SizedBox(height: 15),
-            Padding(
-              padding: const EdgeInsets.only(left: 120.0),
-              child: Row(
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: const Color(0xff3C2177),
+        body: SingleChildScrollView(
+          child: SafeArea(
+            child: GestureDetector(
+              onTap: () =>
+                  {FocusScope.of(context).requestFocus(new FocusNode())},
+              child: Column(
                 children: [
-                  const Text(
-                    'Already registerd ? ',
-                    style: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.bold),
+                  Image.asset('images/landscape.jpeg'),
+                  SizedBox(height: mq.height * .03),
+                  Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: Colors.grey.shade500,
+                          border: Border.all(color: Colors.grey),
+                          borderRadius: BorderRadius.circular(15)),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 15),
+                        child: TextField(
+                          controller: _nameController,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: 'Name',
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const LoginPage()));
+                  SizedBox(height: mq.height * .001),
+                  Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: Colors.grey.shade500,
+                          border: Border.all(color: Colors.grey),
+                          borderRadius: BorderRadius.circular(15)),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 15),
+                        child: TextField(
+                          controller: _emailController,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: 'Email Id',
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: mq.height * .00001),
+                  Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: Colors.grey.shade500,
+                          border: Border.all(color: Colors.grey),
+                          borderRadius: BorderRadius.circular(15)),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 15),
+                        child: TextField(
+                          controller: _passwordController,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: 'Password',
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: mq.height * .01),
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      registerUser();
+                      clearText();
                     },
-                    child: const Text(
-                      ' Sign In',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, color: Colors.blue),
+                    label: const Text(
+                      'REGISTER',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                        shape: const StadiumBorder(),
+                        backgroundColor: const Color(0xff0E4393),
+                        minimumSize: Size(mq.width * .6, mq.height * .075)),
+                    icon: const Icon(
+                      Icons.login,
+                      size: 25,
+                    ),
+                  ),
+                  SizedBox(height: mq.height * .02),
+                  Padding(
+                    padding: EdgeInsets.only(left: 100.0),
+                    child: Row(
+                      children: [
+                        Text(
+                          'Already have an account? ',
+                          style: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.bold),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => LoginPage()));
+                          },
+                          child: Text(
+                            'SignIn',
+                            style: TextStyle(
+                                color: Colors.blue,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
               ),
-            )
-          ],
+            ),
+          ),
         ),
       ),
     );

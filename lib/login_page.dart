@@ -61,21 +61,14 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     Size mq = MediaQuery.of(context).size;
-    return GestureDetector(
-      onTap: () {
-        FocusScopeNode currentFocus = FocusScope.of(context);
-        if (!currentFocus.hasPrimaryFocus) {
-          currentFocus.unfocus();
-        }
-      },
-      //A test comment
+    return SafeArea(
       child: Scaffold(
         backgroundColor: const Color(0xff3C2177),
         body: SingleChildScrollView(
           child: Column(
             children: [
               Image.asset('images/landscape.jpeg'),
-              SizedBox(height: mq.height * .08),
+              SizedBox(height: mq.height * .04),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: Container(
@@ -95,7 +88,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
-              SizedBox(height: mq.height * .04),
+              SizedBox(height: mq.height * .03),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: Container(
@@ -116,7 +109,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
-              SizedBox(height: mq.height * .02),
+              SizedBox(height: mq.height * .015),
               const Padding(
                 padding: EdgeInsets.only(left: 235.0),
                 child: Row(
@@ -156,7 +149,7 @@ class _LoginPageState extends State<LoginPage> {
                       color: Colors.white, fontWeight: FontWeight.bold),
                 ),
               ),
-              SizedBox(height: mq.height * .025),
+              SizedBox(height: mq.height * .020),
               ElevatedButton.icon(
                 onPressed: () {},
                 label: Padding(

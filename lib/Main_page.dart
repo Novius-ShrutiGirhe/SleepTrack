@@ -1,9 +1,6 @@
-
-
 import 'package:flutter/material.dart';
 
 class MainPage extends StatefulWidget {
-
   const MainPage({Key? key}) : super(key: key);
 
   @override
@@ -13,10 +10,19 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-          child: Text('Welcome!!',
-            style: TextStyle(fontWeight: FontWeight.bold),)),
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: const Color(0xff3C2177),
+        body: SingleChildScrollView(
+          child: SafeArea(
+            child: Column(
+              children: [
+                Image.asset('images/sunrise.jpeg'),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
