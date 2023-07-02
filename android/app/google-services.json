@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "245407248776",
+    "project_id": "sleep-tracker-app-22c61",
+    "storage_bucket": "sleep-tracker-app-22c61.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:245407248776:android:78ec668784d298b5b20a3d",
+        "android_client_info": {
+          "package_name": "com.example.mental_health_tracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "245407248776-edgt0ekh8dfmqeddhhj4ub2l9sge1k64.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDz-zP_gtJR143M9JFp_geNlcK9N3RneMs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "245407248776-edgt0ekh8dfmqeddhhj4ub2l9sge1k64.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
