@@ -21,8 +21,13 @@ class _firstPageState extends State<firstPage> {
         padding:
             EdgeInsets.only(bottom: mq.height * .015, top: mq.height * .095),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.alarm, color: Colors.black, size: mq.height * .35),
+            Icon(
+              Icons.alarm,
+              size: 250,
+              color: Colors.white,
+            ),
             const SizedBox(height: 50),
             const Text(
               'SLEEP TRACKER',
@@ -31,7 +36,7 @@ class _firstPageState extends State<firstPage> {
                   color: Colors.white,
                   fontSize: 35),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 5),
             const Text(
               'To get you a better sleep',
               style: TextStyle(
@@ -39,7 +44,7 @@ class _firstPageState extends State<firstPage> {
                   color: Colors.white,
                   fontSize: 15),
             ),
-            const SizedBox(height: 28),
+            const SizedBox(height: 30),
             const Padding(
               padding: EdgeInsets.all(24.0),
               child: Text(
@@ -52,7 +57,7 @@ class _firstPageState extends State<firstPage> {
               ),
             ),
             const SizedBox(
-              height: 35,
+              height: 50,
             ),
             ElevatedButton.icon(
               onPressed: () {
@@ -73,7 +78,8 @@ class _firstPageState extends State<firstPage> {
                 Icons.east_outlined,
                 size: 25,
               ),
-            )
+            ),
+            SizedBox(height: 100),
           ],
         ),
       )),

@@ -2,7 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:mental_health_tracker/DashboardPage.dart';
 import 'package:mental_health_tracker/Main_page.dart';
+import 'package:mental_health_tracker/spalsh.dart';
 import 'login_page.dart';
 import 'config.dart';
 
@@ -36,7 +38,9 @@ class _registerPageState extends State<registerPage> {
       print(jsonResponse['status']);
       if (jsonResponse['status']) {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => const MainPage()));
+          context,
+          MaterialPageRoute(builder: (context) => DashboardPage()),
+        );
       } else {
         print('Something went wrong');
       }
@@ -56,118 +60,158 @@ class _registerPageState extends State<registerPage> {
   @override
   Widget build(BuildContext context) {
     Size mq = MediaQuery.of(context).size;
+
     return SafeArea(
       child: Scaffold(
-        backgroundColor: const Color(0xff3C2177),
         body: SingleChildScrollView(
-          child: SafeArea(
-            child: GestureDetector(
-              onTap: () =>
-                  {FocusScope.of(context).requestFocus(new FocusNode())},
-              child: Column(
+          child: Column(
+            children: [
+              Stack(
                 children: [
-                  Image.asset('images/landscape.jpeg'),
-                  SizedBox(height: mq.height * .03),
-                  Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: Colors.grey.shade500,
-                          border: Border.all(color: Colors.grey),
-                          borderRadius: BorderRadius.circular(15)),
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 15),
-                        child: TextField(
-                          controller: _nameController,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: 'Name',
-                          ),
-                        ),
+                  Container(
+                    child: Image.asset(
+                      'images/landscape.jpeg',
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  Container(
+                    alignment: Alignment.topCenter,
+                    child: Text(
+                      'SLEEP TRACKER',
+                      style: TextStyle(
+                        height: 2.5,
+                        color: Colors.black,
+                        fontSize: 40,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
-                  SizedBox(height: mq.height * .001),
-                  Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: Colors.grey.shade500,
-                          border: Border.all(color: Colors.grey),
-                          borderRadius: BorderRadius.circular(15)),
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 15),
-                        child: TextField(
-                          controller: _emailController,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: 'Email Id',
-                          ),
-                        ),
+                  Container(
+                    margin: EdgeInsets.only(top: mq.height * 0.26),
+                    height: mq.height, // Set the height for the gradient area
+                    width: mq.width,
+                    decoration: BoxDecoration(
+                      color: Color(0xff3C2177), // Replace the gradientColors with a single solid color
+                      borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(50),
+                        topLeft: Radius.circular(50),
                       ),
                     ),
                   ),
-                  SizedBox(height: mq.height * .00001),
                   Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: Colors.grey.shade500,
-                          border: Border.all(color: Colors.grey),
-                          borderRadius: BorderRadius.circular(15)),
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 15),
-                        child: TextField(
-                          controller: _passwordController,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: 'Password',
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: mq.height * .01),
-                  ElevatedButton.icon(
-                    onPressed: () {
-                      registerUser();
-                      clearText();
-                    },
-                    label: const Text(
-                      'REGISTER',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                        shape: const StadiumBorder(),
-                        backgroundColor: const Color(0xff0E4393),
-                        minimumSize: Size(mq.width * .6, mq.height * .075)),
-                    icon: const Icon(
-                      Icons.login,
-                      size: 25,
-                    ),
-                  ),
-                  SizedBox(height: mq.height * .02),
-                  Padding(
-                    padding: EdgeInsets.only(left: 100.0),
-                    child: Row(
+                    padding: EdgeInsets.only(top: mq.height * 0.35),
+                    child: Column(
                       children: [
-                        Text(
-                          'Already have an account? ',
-                          style: TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.bold),
+                        SizedBox(height: mq.height * .03),
+                        Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.grey.shade500,
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 15),
+                              child: TextField(
+                                controller: _nameController,
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  hintText: 'Name',
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => LoginPage()));
+                        SizedBox(height: mq.height * .001),
+                        Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.grey.shade500,
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 15),
+                              child: TextField(
+                                controller: _emailController,
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  hintText: 'Email Id',
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: mq.height * .00001),
+                        Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.grey.shade500,
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 15),
+                              child: TextField(
+                                controller: _passwordController,
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  hintText: 'Password',
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: mq.height * .01),
+                        ElevatedButton.icon(
+                          onPressed: () {
+                            registerUser();
+                            clearText();
                           },
-                          child: Text(
-                            'SignIn',
-                            style: TextStyle(
-                                color: Colors.blue,
-                                fontWeight: FontWeight.bold),
+                          label: const Text(
+                            'REGISTER',
+                            style: TextStyle(fontSize: 18),
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            shape: StadiumBorder(),
+                            backgroundColor: const Color(0xff0E4393),
+                            minimumSize: Size(mq.width * .6, mq.height * .075),
+                          ),
+                          icon: const Icon(
+                            Icons.login,
+                            size: 25,
+                          ),
+                        ),
+                        SizedBox(height: mq.height * .02),
+                        Padding(
+                          padding: EdgeInsets.only(left: 100.0),
+                          child: Row(
+                            children: [
+                              Text(
+                                'Already have an account? ',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                    context, '/third'
+                                  );
+                                },
+                                child: Text(
+                                  'SignIn',
+                                  style: TextStyle(
+                                    color: Colors.blue,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ],
@@ -175,7 +219,7 @@ class _registerPageState extends State<registerPage> {
                   ),
                 ],
               ),
-            ),
+            ],
           ),
         ),
       ),
