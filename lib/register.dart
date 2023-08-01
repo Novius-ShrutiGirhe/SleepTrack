@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:mental_health_tracker/DashboardPage.dart';
 import 'package:mental_health_tracker/Main_page.dart';
 import 'package:mental_health_tracker/spalsh.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'login_page.dart';
 import 'config.dart';
 
@@ -23,33 +24,21 @@ class _registerPageState extends State<registerPage> {
   bool _isNotValidate = false;
 
   void registerUser() async {
-    if (_emailController.text.isNotEmpty &&
-        _passwordController.text.isNotEmpty &&
-        _nameController.text.isNotEmpty) {
-      var regBody = {
-        "name": _nameController.text,
-        "email": _emailController.text,
-        "password": _passwordController.text,
-      };
-      var response = await http.post(Uri.parse(registration),
-          headers: {"Content-Type": "application/json"},
-          body: jsonEncode(regBody));
-      var jsonResponse = jsonDecode(response.body);
-      print(jsonResponse['status']);
-      if (jsonResponse['status']) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => DashboardPage()),
-        );
-      } else {
-        print('Something went wrong');
-      }
-    } else {
-      setState(() {
-        _isNotValidate = true;
-      });
+    final supabase = Supabase.instance.client;
+    final email = _emailController.text.trim();
+    final password = _passwordController.text.trim();
+
+    try {
+      final response1 = await supabase.auth.signUp(
+        email: email,
+        password: password,
+      );
+      print('User created');
+    } catch (error) {
+      print('User creation failed');
     }
   }
+
 
   void clearText() {
     _emailController.clear();
@@ -170,6 +159,8 @@ class _registerPageState extends State<registerPage> {
                           onPressed: () {
                             registerUser();
                             clearText();
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) => DashboardPage()));
                           },
                           label: const Text(
                             'REGISTER',
@@ -200,7 +191,7 @@ class _registerPageState extends State<registerPage> {
                               GestureDetector(
                                 onTap: () {
                                   Navigator.pushNamed(
-                                    context, '/third'
+                                      context, '/third'
                                   );
                                 },
                                 child: Text(

@@ -5,10 +5,11 @@ import 'package:http/http.dart' as http;
 import 'package:mental_health_tracker/DashboardPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Main_page.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'config.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  //const LoginPage({Key? key}) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -17,40 +18,25 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  late SharedPreferences prefs;
+  Future<void> loginUser() async{
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    initSharedPref();
-  }
+    final supabase = Supabase.instance.client;
+    final email = emailController.text.trim();
+    final password = passwordController.text.trim();
+    final response=await supabase.auth.signInWithPassword(password: password,email: email);
 
-  void initSharedPref() async {
-    prefs = await SharedPreferences.getInstance();
-  }
-
-  void loginUser() async {
-    if (emailController.text.isNotEmpty && passwordController.text.isNotEmpty) {
-      var reqBody = {
-        "email": emailController.text,
-        "password": passwordController.text
-      };
-      var response = await http.post(Uri.parse(login),
-          headers: {"Content-Type": "application/json"},
-          body: jsonEncode(reqBody));
-
-      var jsonResponse = jsonDecode(response.body);
-
-      if (jsonResponse['status']) {
-        var myToken = jsonResponse['token'];
-        prefs.setString('token', myToken);
-        Navigator.pushNamed(
-            context, '/fourth');
-      } else {
-        print('Something went wrong');
+    if(response.user!=null)
+      {
+        print('Login succesful');
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => DashboardPage()),
+        );
       }
-    }
+    else
+      {
+        print('Login failed');
+      }
   }
 
   void clearText() {

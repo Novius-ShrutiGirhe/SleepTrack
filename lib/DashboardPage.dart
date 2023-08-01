@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:mental_health_tracker/AnalysisPage.dart';
+import 'package:mental_health_tracker/ArticlePage.dart';
+import 'package:mental_health_tracker/MusicPage.dart';
+import 'package:mental_health_tracker/login_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:analog_clock/analog_clock.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({Key? key}) : super(key: key);
@@ -128,7 +133,7 @@ class _DashboardPageState extends State<DashboardPage> with WidgetsBindingObserv
     final hours = duration.inHours;
     final minutes = duration.inMinutes.remainder(60);
     final seconds = duration.inSeconds.remainder(60);
-    return '$hours hours, $minutes minutes, $seconds seconds';
+    return ' $hours hours, $minutes minutes, $seconds seconds ';
   }
 
   String _getAverageDuration() {
@@ -160,19 +165,27 @@ class _DashboardPageState extends State<DashboardPage> with WidgetsBindingObserv
   int currentIndex = 0;
   @override
   Widget build(BuildContext context) {
+    Color buttonColor = Color(0xFF0E4393);
     Size mq = MediaQuery.of(context).size;
     return SafeArea(
-      child: Scaffold(
-        backgroundColor: const Color(0xff3C2177),
+      child: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('images/dashboard.jpg'),
+            fit: BoxFit.cover,
+          ),
+        ),
+         child: Scaffold(
+        backgroundColor: Colors.transparent,
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: currentIndex,
-          onTap: (index) => setState(() => currentIndex = index),
+          onTap: (index) => _onTabTapped(context, index),
           type: BottomNavigationBarType.fixed,
           selectedItemColor: Colors.white,
           unselectedItemColor: Colors.white60,
           selectedFontSize: 15,
-          showUnselectedLabels: false,
-          backgroundColor: Colors.deepPurple,
+          showUnselectedLabels: true,
+          backgroundColor: Color(0xFF3C2177),
           items: const [
             BottomNavigationBarItem(
               icon: Icon(
@@ -202,85 +215,92 @@ class _DashboardPageState extends State<DashboardPage> with WidgetsBindingObserv
           child: SafeArea(
             child: Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(50.0),
-                  child: Icon(Icons.access_alarm_outlined,
-                      color: Colors.black54, size: mq.height * .35),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: Row(
-                    children: [
-                      Flexible(
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: Colors.deepPurple,
-                              borderRadius: BorderRadius.circular(20)),
-                          child: Padding(
-                            padding: const EdgeInsets.all(20),
-                            child: Text(
-                              'Average Sleep score ${_getAverageDuration()}',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 15,
-                      ),
-                      Flexible(
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: Colors.deepPurple,
-                              borderRadius: BorderRadius.circular(20)),
-                          child: Padding(
-                            padding: const EdgeInsets.all(20),
-                            child: Text(
-                              'Avg. sleep time :${_longestDuration != null ? _getDurationString(_longestDuration!) : 'No lock durations'}',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+                SizedBox(height:100),
+                Container(
+                  width: mq.height * 0.30,
+                  height: mq.height * 0.30,
+                  child: AnalogClock(
+                    width: 300.0,
+                    isLive: true,
+                    hourHandColor: Colors.black,
+                    minuteHandColor: Colors.black,
+                    secondHandColor: Colors.red,
+                    numberColor: Colors.black,
+                    showNumbers: true,
+                    showTicks: true,
+                    showDigitalClock: true,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.white,
+                    ),
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: 45,
-                ),
+                SizedBox(height: 50),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Row(
                     children: [
                       Flexible(
                         child: Container(
                           decoration: BoxDecoration(
-                              color: Colors.deepPurple,
-                              borderRadius: BorderRadius.circular(20)),
+                          border: Border.all(
+                          color: Colors.white,
+                           width: 2.0,
+                          style: BorderStyle.solid,
+                          strokeAlign: BorderSide.strokeAlignOutside,
+                         ),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
                           child: Padding(
-                            padding: const EdgeInsets.all(20),
-                            child: Text(
-                              'Average Sleep At : $_sleepTime  ',
-                              style: TextStyle(color: Colors.white),
+                            padding: const EdgeInsets.all(25),
+                            child: RichText(
+                              text: TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: 'AVERAGE SLEEP SCORE: ',
+                                    style: TextStyle(color: Colors.black, fontSize: 15),
+                                  ),
+                                  TextSpan(
+                                    text: '${_getAverageDuration()}',
+                                    style: TextStyle(color: Colors.yellow, fontSize: 15),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
                       ),
                       SizedBox(
-                        width: 15,
+                        width: 20,
                       ),
                       Flexible(
                         child: Container(
                           decoration: BoxDecoration(
-                              color: Colors.deepPurple,
+                              border: Border.all(
+                                color: Colors.white,
+                                width: 2.0,
+                                style: BorderStyle.solid,
+                                strokeAlign: BorderSide.strokeAlignOutside,
+                              ),
                               borderRadius: BorderRadius.circular(20)),
                           child: Padding(
-                            padding: const EdgeInsets.all(20),
-                            child: Text(
-                              'Average Wake At: $_wakeUpTime  ',
-                              style: TextStyle(color: Colors.white),
+                            padding: const EdgeInsets.all(25),
+                            child: RichText(
+                              text: TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: 'AVERAGE SLEEP TIME: ',
+                                    style: TextStyle(color: Colors.black, fontSize: 15),
+                                  ),
+                                  TextSpan(
+                                    text: _longestDuration != null ? _getDurationString(_longestDuration!) : 'No lock durations',
+                                    style: TextStyle(color: Colors.yellow, fontSize: 15),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
+
                         ),
                       ),
                     ],
@@ -289,15 +309,97 @@ class _DashboardPageState extends State<DashboardPage> with WidgetsBindingObserv
                 SizedBox(
                   height: 20,
                 ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Row(
+                    children: [
+                      Flexible(
+                        child: Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Colors.white,
+                                width: 2.0,
+                                style: BorderStyle.solid,
+                                strokeAlign: BorderSide.strokeAlignOutside,
+                              ),
+                              borderRadius: BorderRadius.circular(20)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(25),
+                            child: RichText(
+                              text: TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: 'AVERAGE SLEEP AT: ',
+                                    style: TextStyle(color: Colors.black, fontSize: 15),
+                                  ),
+                                  TextSpan(
+                                    text: ' $_sleepTime',
+                                    style: TextStyle(color: Colors.yellow, fontSize: 15),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+
+                        ),
+                      ),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Flexible(
+                        child: Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Colors.white,
+                                width: 2.0,
+                                style: BorderStyle.solid,
+                                strokeAlign: BorderSide.strokeAlignOutside,
+                              ),
+                              borderRadius: BorderRadius.circular(20)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(26),
+                            child: RichText(
+                              text: TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: 'AVERAGE WAKE AT: ',
+                                    style: TextStyle(color: Colors.black, fontSize: 15),
+                                  ),
+                                  TextSpan(
+                                    text: ' $_wakeUpTime',
+                                    style: TextStyle(color: Colors.yellow, fontSize: 15),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 50,
+                ),
                 ElevatedButton(
                   onPressed: _deleteStoredData,
                   child: Text('Delete Stored Data'),
+                  style: ElevatedButton.styleFrom(
+                    textStyle: TextStyle(fontSize: 15),
+                    minimumSize: Size(200, 50),
+                    primary: buttonColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                  ),
                 ),
               ],
             ),
           ),
         ),
       ),
+    ),
     );
   }
 
@@ -311,5 +413,27 @@ class _DashboardPageState extends State<DashboardPage> with WidgetsBindingObserv
       _wakeUpTime = 'No lock durations';
       _lockDurations = [];
     });
+  }
+  void _onTabTapped(BuildContext context, int index) {
+    setState(() {
+      currentIndex = index;
+    });
+
+    switch (index) {
+      case 0:
+        Navigator.push(context, MaterialPageRoute(builder: (context) =>DashboardPage()));
+        break;
+      case 1:
+        Navigator.push(context, MaterialPageRoute(builder: (context) =>AnalysisPage()));
+        break;
+      case 2:
+        Navigator.push(context, MaterialPageRoute(builder: (context) =>ArticlePage()));
+        break;
+      case 3:
+        Navigator.push(context, MaterialPageRoute(builder: (context) =>MusicPage()));
+        break;
+      default:
+        break;
+    }
   }
 }
